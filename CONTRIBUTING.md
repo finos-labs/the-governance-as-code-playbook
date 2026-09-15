@@ -1,6 +1,6 @@
-# {project name} Contribution and Governance Policies
+# The Governance As Code Playbook Contribution and Governance Policies
 
-This document describes the contribution process and governance policies of the FINOS {project name} project.
+This document describes the contribution process and governance policies of the FINOS The Governance As Code Playbook project.
 
 The project is also governed by:
 
@@ -10,13 +10,7 @@ The project is also governed by:
 * FINOS [Collaborative Principles](https://community.finos.org/docs/governance/collaborative-principles/)
 * FINOS [Meeting Procedures](https://community.finos.org/docs/governance/meeting-procedures/)
 
-{project name} is [Apache 2.0 licensed](https://www.apache.org/licenses/LICENSE-2.0) and accepts contributions via Git pull requests.
-
-## Technical Charter
-
-A **Technical Charter** for the {project name} project is published as a [**PDF at the root of this repository**](./technical-charter.pdf). That charter defines the project's mission, scope, TSC structure, IP and licensing, and related governance.
-
-**Do not duplicate that material here.**
+The Governance As Code Playbook is licensed under [Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/) and accepts contributions via Git pull requests. By contributing, you agree that your contribution is provided under the same license.
 
 ## Developer Certificate of Origin (DCO)
 
@@ -112,22 +106,8 @@ To make review of PRs easier, please:
 * Keep commits small and cohesive. If you have multiple contributions, submit them as independent commits and, ideally, as independent PRs.
 * Reference issues if your PR has anything to do with an issue, even if it doesn't directly address it.
 * Minimize non-functional changes, such as unnecessary whitespace changes.
-* Ensure all new files include a header comment block containing the [Apache License v2.0 and your copyright information](https://www.apache.org/licenses/LICENSE-2.0#apply).
-* If necessary, such as due to third-party dependency licensing requirements, update the [NOTICE file](./NOTICE) with any new attribution or other notices.
-
-## Governance
-
-### Roles and Charter-Level Governance
-
-Definitions of **Contributor**, **Maintainer**, **TSC Chair**, TSC responsibilities, and charter-level voting are defined in the [**Technical Charter**](./technical-charter.pdf).
-
-The current Maintainer roster is listed in [**MAINTAINERS.md**](./MAINTAINERS.md).
-
-The project community consists of Contributors and Maintainers:
-
-* A **Contributor** is anyone who submits a contribution to the project. Contributions may include code, issues, comments, documentation, media, or any combination of the above.
-* A **Maintainer** is a Contributor who, by virtue of their contribution history, has been given write access to project repositories and may merge approved contributions. Maintainers initially serve as the voting members of the Technical Steering Committee (TSC).
-* The **TSC Chair** is the project's interface with the FINOS team and Board. They are responsible for approving [quarterly project reports](https://community.finos.org/docs/governance/#project-governing-board-reporting) and communicating on behalf of the project. The TSC Chair can be elected by a vote of the TSC.
+* Ensure all new files include an `SPDX-License-Identifier: CC-BY-4.0` header and your copyright information, where a header is appropriate.
+* Include attribution when reusing third-party materials and ensure they are compatible with CC BY 4.0. If necessary, update the [NOTICE file](./NOTICE) with any new attribution or other notices.
 
 ### Contribution Rules
 
@@ -140,36 +120,6 @@ The key words **MUST**, **SHALL**, **SHOULD**, **MAY**, etc. in this document ar
 * Pull requests for non-trivial contributions **SHOULD** remain open for a review period sufficient to give all Maintainers an opportunity to review and comment.
 * After the review period, if no Maintainer objects to the pull request, any Maintainer **MAY** merge it.
 * If any Maintainer objects to a pull request, the Maintainers **SHOULD** try to reach consensus through discussion. If no consensus can be reached, any Maintainer **MAY** call for a vote on the contribution.
-
-### TSC Voting
-
-The TSC **MAY** hold votes only when it is unable to reach consensus on an issue.
-
-Votes **SHALL** take the form of:
-
-* `+1` — agree
-* `-1` — disagree
-* `+0` — abstain
-
-Quorum for TSC meetings requires at least **50% of all voting members of the TSC** to be present.
-
-Decisions by vote at a meeting require a majority vote of those in attendance, provided quorum is met.
-
-Decisions made by electronic vote without a meeting require a majority vote of all voting members of the TSC.
-
-If there is only one Maintainer, they **SHALL** decide any issue otherwise requiring a vote.
-
-The TSC **SHALL** decide the following matters by consensus or, if necessary, a vote:
-
-* Contested pull requests
-* Election and removal of the TSC Chair
-* Election and removal of Maintainers
-
-All TSC votes **MUST** be carried out transparently, with all discussion and voting occurring in public using one of the following methods:
-
-* Comments associated with the relevant issue or pull request, if applicable
-* The project mailing list or another official public communication channel
-* A regular, minuted project meeting
 
 ### Maintainer Qualifications
 

@@ -1,25 +1,19 @@
-<img align="right" width="40%" src="https://www.finos.org/hubfs/FINOS/finos-logo/FINOS_Icon_Wordmark_Name_RGB_horizontal.png">
+[![FINOS - Incubating](https://cdn.jsdelivr.net/gh/finos/contrib-toolbox@master/images/badge-incubating.svg)](https://community.finos.org/docs/governance/lifecycle-stages/incubating) [![CC BY 4.0][cc-by-shield]][cc-by]
 
-# FINOS Software Project Blueprint
+# The Governance As Code Playbook
 
-Project blueprint is a GitHub repository template for all [Fintech Open Source Foundation (FINOS)](https://www.finos.org/) hosted GitHub repositories, contributed and maintained by FINOS.
 
-## How to use this blueprint
-
-Please follow instructions on [community.finos.org/docs/collaboration-infrastructure#finos-project-blueprint](https://community.finos.org/docs/collaboration-infrastructure#finos-project-blueprint)
-
-## Blueprint preview
-
-A preview of the blueprint can be found on [project-blueprint.finos.org](https://project-blueprint.finos.org)
-
-## Governance
-
-This blueprint implements [FINOS open source software project governance](https://community.finos.org/docs/governance/#open-source-software-projects) on community.finos.org.
 
 ## License
 
-Copyright 2019 Fintech Open Source Foundation
+Copyright © 2026 Fintech Open Source Foundation
 
-Distributed under the [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0).
+This work is licensed under a [Creative Commons Attribution 4.0 International License][cc-by].
 
-SPDX-License-Identifier: [Apache-2.0](https://spdx.org/licenses/Apache-2.0)
+[![CC BY 4.0][cc-by-image]][cc-by]
+
+[cc-by]: http://creativecommons.org/licenses/by/4.0/
+[cc-by-image]: https://i.creativecommons.org/l/by/4.0/88x31.png
+[cc-by-shield]: https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg
+
+SPDX-License-Identifier: [CC-BY-4.0](https://spdx.org/licenses/CC-BY-4.0.html).
