@@ -15,7 +15,7 @@ For risk, compliance, and model governance functions, the shift is just as signi
 
 - **Faster, better-informed reviews.** When a system reaches a formal risk review, the reference architecture, the AIGF risk mapping, and the CI/CD validation history already exist.
 
-- **Direct line to regulatory frameworks.** Because AIGF's catalog is explicitly mapped to frameworks like the EU AI Act, FCA Consumer Duty, and PRA operational resilience requirements, GRC teams aren't translating internal controls into regulatory language after the fact.
+- **Direct line to regulatory frameworks.** Because AIGF's catalog is explicitly mapped to regulations like the EU AI Act, GRC teams aren't translating internal controls into regulatory language after the fact.
 
 - **A seat at the table industry-wide.** AIGF is being shaped by the same institutions that have to answer to the same regulators — Morgan Stanley, NatWest, DTCC, RBC, and others are founding backers of the FINOS AI Fund driving this work.
 
