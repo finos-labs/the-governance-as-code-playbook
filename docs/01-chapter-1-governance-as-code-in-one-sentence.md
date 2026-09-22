@@ -1,8 +1,3 @@
-<!--
-SPDX-License-Identifier: CC-BY-4.0
-Copyright 2026 Fintech Open Source Foundation
--->
-
 # Chapter 1 — Governance-as-Code, in One Sentence
 
 Agentic AI systems — agents calling tools, invoking MCP servers, making autonomous decisions — move and change far faster than traditional manual, siloed governance can track. The raw material an FSI organization actually starts from is fragmented: regulations, industry guidelines, technical standards, and best practices scattered across dozens of sources, none of them machine-readable and none of them talking to each other. FINOS's answer is to turn that fragmented landscape into something machine-readable and runtime-observable: an end-to-end pipeline covering policy definition, architecture, controls, orchestration, and observability, feeding back on itself as a continuous loop. Instead of governance being a document engineers consult and a checklist compliance signs off on, it becomes something that runs alongside the code — checked automatically, continuously, and with evidence generated as a byproduct rather than a separate task.

@@ -1,8 +1,3 @@
-<!--
-SPDX-License-Identifier: CC-BY-4.0
-Copyright 2026 Fintech Open Source Foundation
--->
-
 # Chapter 13 — Evals: Measuring What Determinism Doesn't Cover
 
 “Evals” has been sitting in this guide's own pipeline diagram since Chapter 1 — listed alongside OpenTelemetry and dashboards in the Observability & Feedback stage, and referenced again in Chapters 2, 12, and 14 as the thing that judges whether a deployed process is “still behaving as designed.” None of those mentions ever said what an eval actually is, or how to build one. This chapter fixes that.

@@ -1,8 +1,3 @@
-<!--
-SPDX-License-Identifier: CC-BY-4.0
-Copyright 2026 Fintech Open Source Foundation
--->
-
 # Chapter 3 — The Determinism Problem, and Why Fluxnova Solves It
 
 Here's the tension at the heart of every agentic AI compliance conversation: LLMs are non-deterministic by nature. Ask the same question twice and you can get two different answers, two different tool-call sequences, two different paths through a task. That's a feature for creativity and adaptability — and a serious liability for an FSI organization, where a regulator, an auditor, or a court needs to know that a specific process was followed the same way every time, that specific approval gates were never skipped, and that the sequence of decisions leading to an outcome can be reconstructed after the fact.

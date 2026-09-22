@@ -1,8 +1,3 @@
-<!--
-SPDX-License-Identifier: CC-BY-4.0
-Copyright 2026 Fintech Open Source Foundation
--->
-
 # References
 
 This guide draws on the following public sources. Where a fact, quote, or figure in this guide is attributed to FINOS, Fluxnova, CALM, or AIUC-1, it traces back to one of these.

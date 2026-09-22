@@ -1,8 +1,3 @@
-<!--
-SPDX-License-Identifier: CC-BY-4.0
-Copyright 2026 Fintech Open Source Foundation
--->
-
 # Chapter 12 — Validating Controls in CI/CD: The KYC Build Gate
 
 Chapter 11 finished building the KYC process: a CALM specification, an agentic ad-hoc subprocess, and a DMN table that is never supposed to auto-clear a sanctions hit. None of that is worth anything if nobody actually checks it before the process reaches production. This chapter is Chapter 7's Step 6 — “embed compliance checks into CI/CD” — and Chapter 2.3's Controls stage, made concrete for the KYC use case specifically: the automated gate that stands between “we built something that should satisfy the risk assessment” and “we've actually confirmed it does.”

@@ -1,8 +1,3 @@
-<!--
-SPDX-License-Identifier: CC-BY-4.0
-Copyright 2026 Fintech Open Source Foundation
--->
-
 # Conclusion — Why This Matters More Than Another Framework
 
 The real point of Governance-as-Code isn't that AIGF got more detailed — it's that governance stopped being a separate artifact that trails behind engineering and became part of the same system engineers already build, test, and ship through. That's the difference between a risk catalog living in a wiki that nobody opens until an audit, and a risk catalog that shapes what gets built the moment it's written, because the pipeline enforces it automatically. For an FSI organization building its own agentic AI, this reframes the build itself: governance isn't a separate workstream running in parallel to engineering and periodically checking in. It's the substrate the engineering pipeline runs on.

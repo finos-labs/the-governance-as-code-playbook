@@ -1,8 +1,3 @@
-<!--
-SPDX-License-Identifier: CC-BY-4.0
-Copyright 2026 Fintech Open Source Foundation
--->
-
 # Chapter 6 — AIGF and AIUC-1: Differences and Complementarity
 
 None of this makes external certification irrelevant — it changes what that certification is built on. It's worth being precise about how AIGF-driven Governance-as-Code relates to AIUC-1, the agent security and reliability standard from the Artificial Intelligence Underwriting Company, because the two operate at different layers and answer different questions, and because confusing them is one of the more common mistakes an FSI organization makes when planning its governance program.

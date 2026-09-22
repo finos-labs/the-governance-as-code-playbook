@@ -1,8 +1,3 @@
-<!--
-SPDX-License-Identifier: CC-BY-4.0
-Copyright 2026 Fintech Open Source Foundation
--->
-
 # Chapter 11 — Fluxnova in Depth: Modeling the KYC Process
 
 Chapter 9 covered Step 1 of the nine-step path — codifying the KYC use case into a taxonomy classification, a risk shortlist, and a mitigation mapping, then contributing that artifact back to AIGF. This chapter picks up Step 5: turning those mitigations into an actual, running, enforced process. Fluxnova is where that happens, and because it's the component that ultimately determines whether the deterministic guarantees described in Chapter 3 hold in production, it deserves the same level of depth as Step 1.

@@ -1,8 +1,3 @@
-<!--
-SPDX-License-Identifier: CC-BY-4.0
-Copyright 2026 Fintech Open Source Foundation
--->
-
 # Chapter 2 — Where AIGF Fits in the Pipeline
 
 Think of the pipeline as five stages fed by one fragmented starting point, each answering a different question.
