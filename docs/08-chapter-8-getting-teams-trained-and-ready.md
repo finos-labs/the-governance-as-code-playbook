@@ -1,8 +1,3 @@
-<!--
-SPDX-License-Identifier: CC-BY-4.0
-Copyright 2026 Fintech Open Source Foundation
--->
-
 # Chapter 8 — Getting Teams Trained and Ready
 
 Chapter 7 described who does what once a pipeline is running and how to sequence the work. This chapter addresses the question that comes before that: how does a Chief AI Officer get an organization that doesn't yet think this way to the point where Chapter 7 is executable at all. Training and rollout is a different problem from process design, and treating them as the same problem is itself one of the pitfalls from the Introduction — a Spoke “moving fast” in an ungoverned way usually just means nobody trained it on the taxonomy yet.

@@ -1,8 +1,3 @@
-<!--
-SPDX-License-Identifier: CC-BY-4.0
-Copyright 2026 Fintech Open Source Foundation
--->
-
 # Chapter 5 — What This Means for GRC Teams
 
 For risk, compliance, and model governance functions, the shift is just as significant, though it looks different from their side of the table.

@@ -1,8 +1,3 @@
-<!--
-SPDX-License-Identifier: CC-BY-4.0
-Copyright 2026 Fintech Open Source Foundation
--->
-
 # Chapter 4 — What This Means for Engineering Teams
 
 For engineers, the practical shift is significant: governance stops being someone else's job that shows up at the end. This chapter looks at what that shift actually looks like in the artifacts engineers write and review day to day, starting with CALM itself.
@@ -51,58 +46,6 @@ A minimal CALM fragment starts with the nodes and the relationships between them
 }
 ```
 
-    {
-
-      "unique-id": "greeting-tool",
-
-      "node-type": "service",
-
-      "name": "Greeting Composer Tool",
-
-      "description": "Formats a greeting string for a given name and language"
-
-    },
-
-    {
-
-      "unique-id": "interaction-log",
-
-      "node-type": "system",
-
-      "name": "Interaction Log",
-
-      "description": "Receives the agent's output for auditing"
-
-    }
-
-  ],
-
-  "relationships": [
-
-    {
-
-      "unique-id": "agent-calls-greeting-tool",
-
-      "connects": { "source": "hello-world-agent", "destination": "greeting-tool" },
-
-      "description": "Agent invokes greeting composition as a bounded tool call"
-
-    },
-
-    {
-
-      "unique-id": "agent-writes-log",
-
-      "connects": { "source": "hello-world-agent", "destination": "interaction-log" },
-
-      "description": "Agent's output is written to the interaction log"
-
-    }
-
-  ]
-
-}
-
 Notice what this fragment does and doesn't say. It says the agentic subprocess exists, what it's called, and exactly which one tool and which downstream system it's allowed to talk to — the relationships list is the complete set of connections; there is no relationship to anything else, which means a reviewer (or an automated CI check) can see the agent's entire reachable surface at a glance. It doesn't yet say anything about compliance requirements — that's what controls are for.
 
 Controls attach directly to a node, pairing a requirement (what must be true) with a configuration (the specific values that satisfy it for this case). Here, a simple content-safety control on the same agent:
@@ -129,18 +72,6 @@ Controls attach directly to a node, pairing a requirement (what must be true) wi
   ]
 }
 ```
-
-          ]
-
-        }
-
-      }
-
-    }
-
-  ]
-
-}
 
 The requirement file (“no-restricted-languages.json”) is the reusable, versioned statement of the rule itself — in this case, that the agent may only respond in a language from an approved list. The configuration file is what makes that rule concrete for this specific node: the actual list of approved languages. A real use case follows exactly this same pattern, just with requirements that matter more than a greeting's language — a control stating that a sanctions match can never be auto-cleared, say, looks structurally identical to the one above, with a different requirement and a different configuration behind it. Later chapters build one of those in full.
 

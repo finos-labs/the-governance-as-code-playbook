@@ -1,8 +1,3 @@
-<!--
-SPDX-License-Identifier: CC-BY-4.0
-Copyright 2026 Fintech Open Source Foundation
--->
-
 # Introduction
 
 A note on terms before we start: this guide uses “FSI” and “FSI organization” to mean any financial services institution — a bank, but equally an insurer, an asset manager, a payments provider, or another regulated financial firm. The pipeline and every example in this guide were built around a banking use case, because that's where AIGF and Fluxnova have the deepest early adoption, but nothing about the argument is bank-specific. Wherever this guide says “an FSI organization,” read it as applying to whichever kind of regulated financial institution you actually work for.

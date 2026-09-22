@@ -1,0 +1,86 @@
+\documentclass[10pt]{book}
+\usepackage{fontspec}
+\setmainfont{texgyrepagella}[
+  Path = $fontdir$/,
+  Extension = .otf,
+  UprightFont = *-regular,
+  BoldFont = *-bold,
+  ItalicFont = *-italic,
+  BoldItalicFont = *-bolditalic,
+]
+\setsansfont{texgyreheros}[
+  Path = $fontdir$/,
+  Extension = .otf,
+  UprightFont = *-regular,
+  BoldFont = *-bold,
+  ItalicFont = *-italic,
+  BoldItalicFont = *-bolditalic,
+]
+\setmonofont{DejaVu Sans Mono}[Scale=0.72]
+\usepackage{geometry}
+\geometry{paperwidth=6in,paperheight=9in,margin=0.75in}
+\usepackage{graphicx}
+\usepackage{longtable,booktabs,array}
+\setlength{\tabcolsep}{4pt}
+\usepackage[table]{xcolor}
+\usepackage{framed}
+\definecolor{shadecolor}{HTML}{F5F4EF}
+\usepackage{microtype}
+\setlength{\emergencystretch}{3em}
+\usepackage[colorlinks=true,linkcolor=blue!50!black,urlcolor=blue!50!black,bookmarksdepth=3,bookmarksnumbered=false]{hyperref}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[C]{\small\itshape\color[HTML]{8A8983} $title$}
+\fancyfoot[C]{\small\color[HTML]{5F5E5A}\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\setcounter{secnumdepth}{0}
+\usepackage{parskip}
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\title{$title$}
+\author{}
+\date{}
+\begin{document}
+
+% ===== COVER PAGE =====
+\thispagestyle{empty}
+\pagecolor[HTML]{26215C}
+\vspace*{0.55in}
+\begin{center}
+\includegraphics[width=3.55in]{$assetdir$/cover-art.png}\\[0.35in]
+{\sffamily\bfseries\Large\color{white} THE GOVERNANCE-AS-CODE PLAYBOOK}\\[0.22in]
+{\itshape\large\color[HTML]{D9D6F5} Adopting FINOS AIGF for Agentic AI in Financial Services}\\[0.55in]
+{\small\color[HTML]{C7C4E8} A practical guide to policy definition, architecture, deterministic\\
+orchestration, and observability for agentic AI an FSI organization\\
+can actually run in production.}\\[0.55in]
+\includegraphics[width=3.1in]{$assetdir$/logo-aifund.png}
+\end{center}
+\vfill
+\hfill\includegraphics[width=0.85in]{$assetdir$/logo-finos.png}\hspace*{0.2in}\\[0.15in]
+\clearpage
+\nopagecolor
+
+% ===== COLOPHON =====
+\thispagestyle{fancy}
+\vspace*{0.3in}
+\textbf{The Governance-as-Code Playbook}\par
+\vspace{2pt}
+{\itshape\color[HTML]{5F5E5A} Adopting FINOS AIGF for Agentic AI in Financial Services}\par
+\vspace{14pt}
+{\small First Edition}\par
+\vspace{2pt}
+{\small\bfseries\itshape\color[HTML]{B0401E} Draft --- September 2026. Not for external distribution; contents subject to change ahead of first release.}\par
+\vspace{14pt}
+{\small\color[HTML]{5F5E5A} Prepared as an internal guide on adopting FINOS's AI Governance Framework (AIGF) and its surrounding Governance-as-Code pipeline for agentic AI in financial services.}\par
+\vspace{10pt}
+{\small\color[HTML]{5F5E5A} This guide references and draws on the open-source FINOS AI Governance Framework, CALM, and Fluxnova projects, the AIUC-1 certification standard, and the Linux Foundation's Tokenomics Foundation. Full sources are listed in the References chapter at the end of this guide.}\par
+\vspace{10pt}
+{\small\itshape\color[HTML]{8A8983} For internal distribution.}
+\clearpage
+
+$if(toc)$
+\tableofcontents
+$endif$
+$body$
+\end{document}

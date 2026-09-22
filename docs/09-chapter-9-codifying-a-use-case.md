@@ -1,8 +1,3 @@
-<!--
-SPDX-License-Identifier: CC-BY-4.0
-Copyright 2026 Fintech Open Source Foundation
--->
-
 # Chapter 9 — Codifying a Use Case
 
 Step 1 deserves more attention than a single paragraph, for a specific reason: it's not just the first step, it's the *template* for how every subsequent use case gets handled. Get the pattern right once, and every team after you is filling in a known shape rather than inventing a process from scratch. This chapter walks through that pattern in full, using a KYC use case as the worked example, all the way through to opening a pull request against the AIGF repository itself.

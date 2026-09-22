@@ -1,8 +1,3 @@
-<!--
-SPDX-License-Identifier: CC-BY-4.0
-Copyright 2026 Fintech Open Source Foundation
--->
-
 # Chapter 15 — Tokenomics: Attribution, Cost, and Value
 
 Chapter 14 gave every task in the KYC process a cost dimension almost in passing — the observability layer's job, per Chapter 1's diagram, includes cost tracking alongside behavior. This chapter takes that dimension seriously on its own terms. Tokenomics is not the same question as “how many tokens did we spend this month” — that number, on its own, tells an FSI organization almost nothing useful. The real questions are who spent them, on what, and whether what they bought was worth more than it cost.
@@ -109,50 +104,6 @@ Everything in Chapters 9 and 10 established a pattern: a risk gets a control, a 
   ]
 }
 ```
-
-          ]
-
-        }
-
-      }
-
-    },
-
-    {
-
-      "unique-id": "fluxnova-engine",
-
-      "node-type": "system",
-
-      "name": "Fluxnova orchestration engine",
-
-      "controls": {
-
-        "cost-allocation": {
-
-          "description": "Shared-infrastructure hosting and support cost, amortized across every use case this engine runs",
-
-          "requirements": [
-
-            {
-
-              "control-requirement-url": "https://fsi.example/controls/schema/shared-infra-allocation.json",
-
-              "control-config-url": "https://fsi.example/controls/config/fluxnova-hosting-allocation-2026q3.json"
-
-            }
-
-          ]
-
-        }
-
-      }
-
-    }
-
-  ]
-
-}
 
 Two things are worth noting about this pair of controls. The first, on the agent node, is a hard ceiling — the kind of guardrail that can block a release the same way a failing compliance check does in Chapter 4's CI/CD integration, catching a runaway prompt or an unbounded reasoning loop before it becomes next month's surprise bill. The second, on the Fluxnova engine node itself, isn't a limit so much as an allocation rule — it's what makes Section 15.4's amortization concrete and auditable rather than a one-off spreadsheet calculation, giving even a “free” open-source component an explicit, reviewable cost tag in the same file where its business-logic behavior is governed.
 

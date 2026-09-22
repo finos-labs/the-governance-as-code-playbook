@@ -1,8 +1,3 @@
-<!--
-SPDX-License-Identifier: CC-BY-4.0
-Copyright 2026 Fintech Open Source Foundation
--->
-
 # Chapter 14 — Observability in Depth: Evidence, Metrics, and the KYC Process in Production
 
 Chapter 11 ended at the point of deployment, with a one-paragraph promise: every execution gets traced, feeding OpenTelemetry and, eventually, the evals that judge whether the system still behaves as designed. This chapter makes good on that promise in the same depth as Chapters 9 through 11 gave the rest of the build — what observability actually needs to capture once the KYC process is live, how it turns into evidence a regulator or an auditor can use, and how it gives engineering and Governance a shared, factual view of what the deployed system is actually doing.

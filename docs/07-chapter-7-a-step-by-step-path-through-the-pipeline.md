@@ -1,8 +1,3 @@
-<!--
-SPDX-License-Identifier: CC-BY-4.0
-Copyright 2026 Fintech Open Source Foundation
--->
-
 # Chapter 7 — A Step-by-Step Path Through the Pipeline
 
 All of this can sound abstract until you walk through it as a sequence. Here's how an FSI organization actually moves a new agentic use case from idea to governed, running system, starting where AIGF itself starts: classification.
