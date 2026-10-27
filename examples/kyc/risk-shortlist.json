@@ -1,0 +1,53 @@
+{
+  "spdx_license_identifier": "CC-BY-4.0",
+  "use_case_id": "UC-KYC-DOC-REVIEW-001",
+  "derived_by_policy_bundle": "AIGF-STEP2-DERIVATION-RULES-V1",
+  "mrm_review": {
+    "status": "approved",
+    "reviewer_group": "Model Risk Management (MRM) & AML Compliance",
+    "approval_id": "MRM-2026-KYC-042",
+    "reviewed_at": "2026-10-20T14:00:00Z"
+  },
+  "shortlisted_risks": [
+    {
+      "risk_id": "RI-KYC-07",
+      "derived_from_rule": "DR-SANCTIONS-01",
+      "title": "Autonomous False Clear on Sanctions or PEP Match",
+      "aigf_category": "regulatory-and-compliance",
+      "severity": "critical",
+      "required_mitigation_id": "MI-KYC-07",
+      "calm_control_id": "no-sanctions-override",
+      "override": null
+    },
+    {
+      "risk_id": "RI-KYC-12",
+      "derived_from_rule": "DR-CONFIDENCE-02",
+      "title": "Hallucinated or Low-Confidence Field Extraction Leading to Incorrect Triage",
+      "aigf_category": "operational",
+      "severity": "high",
+      "required_mitigation_id": "MI-KYC-12",
+      "calm_control_id": "mandatory-human-review",
+      "override": null
+    },
+    {
+      "risk_id": "RI-KYC-15",
+      "derived_from_rule": "DR-UNTRUSTED-DOC-03",
+      "title": "Indirect Prompt Injection via Uploaded Onboarding Document",
+      "aigf_category": "security",
+      "severity": "high",
+      "required_mitigation_id": "MI-KYC-15",
+      "calm_control_id": "untrusted-document-boundary",
+      "override": null
+    },
+    {
+      "risk_id": "RI-KYC-19",
+      "derived_from_rule": "DR-EXTERNAL-MODEL-04",
+      "title": "Unbounded External Model Invocation or Cross-Tenant Data Exposure",
+      "aigf_category": "security",
+      "severity": "high",
+      "required_mitigation_id": "MI-KYC-19",
+      "calm_control_id": "ccc-workload-isolation",
+      "override": null
+    }
+  ]
+}

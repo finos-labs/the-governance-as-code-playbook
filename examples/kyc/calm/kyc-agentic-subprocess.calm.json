@@ -1,0 +1,195 @@
+{
+  "$schema": "https://calm.finos.org/release/1.0/meta/calm.json",
+  "spdx_license_identifier": "CC-BY-4.0",
+  "unique-id": "kyc-agentic-subprocess-v1",
+  "name": "KYC Document Review Agentic Subprocess",
+  "description": "CALM architecture specification for the bounded-autonomy KYC document review workflow (Chapters 10, 12, and 14).",
+  "nodes": [
+    {
+      "unique-id": "kyc-doc-store",
+      "node-type": "database",
+      "name": "KYC Document Store",
+      "description": "Stores customer-uploaded onboarding documents (passports, proof-of-address, corporate registry extracts) prior to review.",
+      "data-classification": "PII-High"
+    },
+    {
+      "unique-id": "kyc-agent",
+      "node-type": "service",
+      "name": "KYC Document Review Agent",
+      "description": "Bounded-autonomy agent that extracts fields from onboarding documents, invokes sanctions screening, and submits structured recommendations to the deterministic gate.",
+      "data-classification": "PII-High",
+      "permitted-tools": [
+        "kyc-doc-store-read",
+        "sanctions-pep-screening-read",
+        "case-management-queue-write"
+      ]
+    },
+    {
+      "unique-id": "sanctions-pep-service",
+      "node-type": "service",
+      "name": "Sanctions & PEP Screening Service",
+      "description": "External or internal screening service queried against OFAC, UN, EU, and PEP watchlists.",
+      "data-classification": "Confidential"
+    },
+    {
+      "unique-id": "risk-confidence-gate",
+      "node-type": "service",
+      "name": "Deterministic Risk & Confidence Gate",
+      "description": "Deterministic decision gate (implemented via Fluxnova BPMN/DMN reference engine) that evaluates sanctions match status, extraction confidence, and risk tier outside the model.",
+      "data-classification": "Confidential"
+    },
+    {
+      "unique-id": "case-management-queue",
+      "node-type": "service",
+      "name": "KYC Case Management Queue",
+      "description": "Downstream case queue receiving auto-cleared low-risk cases or escalated analyst tasks. The agent has queue-write authority only and cannot close a compliance file.",
+      "data-classification": "PII-High"
+    },
+    {
+      "unique-id": "human-analyst-task",
+      "node-type": "actor",
+      "name": "KYC Compliance Analyst Review",
+      "description": "Mandatory human-in-the-loop review step for any confirmed/possible sanctions hit, low-confidence extraction, or medium/high risk tier.",
+      "data-classification": "PII-High"
+    },
+    {
+      "unique-id": "fluxnova-engine",
+      "node-type": "service",
+      "name": "Fluxnova Orchestration Engine",
+      "description": "Reference deterministic BPMN orchestration engine hosting the KYC workflow and enforcing process boundaries.",
+      "data-classification": "Confidential"
+    },
+    {
+      "unique-id": "fluxnova-dmn-service",
+      "node-type": "service",
+      "name": "Fluxnova DMN Decision Engine",
+      "description": "Reference deterministic DMN evaluation service executing the KYC Risk & Confidence decision table.",
+      "data-classification": "Confidential"
+    },
+    {
+      "unique-id": "llm-provider",
+      "node-type": "service",
+      "name": "Enterprise LLM Inference Provider",
+      "description": "External/shared model inference endpoint invoked by the KYC agent under zero-data-retention and token-budget controls.",
+      "data-classification": "PII-High"
+    }
+  ],
+  "relationships": [
+    {
+      "unique-id": "agent-reads-docs",
+      "description": "KYC Agent reads uploaded documents from the KYC Document Store (read-only).",
+      "relationship-type": {
+        "connects": {
+          "source": { "node": "kyc-agent" },
+          "destination": { "node": "kyc-doc-store" }
+        }
+      },
+      "protocol": "HTTPS"
+    },
+    {
+      "unique-id": "agent-queries-sanctions",
+      "description": "KYC Agent queries the Sanctions & PEP Screening Service for watchlist matches.",
+      "relationship-type": {
+        "connects": {
+          "source": { "node": "kyc-agent" },
+          "destination": { "node": "sanctions-pep-service" }
+        }
+      },
+      "protocol": "HTTPS"
+    },
+    {
+      "unique-id": "agent-submits-to-gate",
+      "description": "KYC Agent submits structured extraction output, confidence score, and sanctions status to the deterministic gate.",
+      "relationship-type": {
+        "connects": {
+          "source": { "node": "kyc-agent" },
+          "destination": { "node": "risk-confidence-gate" }
+        }
+      },
+      "protocol": "HTTPS"
+    },
+    {
+      "unique-id": "gate-clears-to-queue",
+      "description": "Deterministic gate routes verified low-risk, high-confidence, zero-sanctions cases to the Case Management Queue.",
+      "relationship-type": {
+        "connects": {
+          "source": { "node": "risk-confidence-gate" },
+          "destination": { "node": "case-management-queue" }
+        }
+      },
+      "protocol": "HTTPS"
+    },
+    {
+      "unique-id": "gate-escalates-to-analyst",
+      "description": "Deterministic gate routes any confirmed/possible sanctions hit, <95% confidence, or elevated risk case to a human analyst.",
+      "relationship-type": {
+        "connects": {
+          "source": { "node": "risk-confidence-gate" },
+          "destination": { "node": "human-analyst-task" }
+        }
+      },
+      "protocol": "HTTPS"
+    },
+    {
+      "unique-id": "agent-invokes-llm-provider",
+      "description": "KYC Agent invokes the Enterprise LLM Inference Provider for document field extraction.",
+      "relationship-type": {
+        "connects": {
+          "source": { "node": "kyc-agent" },
+          "destination": { "node": "llm-provider" }
+        }
+      },
+      "protocol": "HTTPS"
+    }
+  ],
+  "controls": {
+    "no-sanctions-override": {
+      "description": "The KYC agent cannot auto-clear any case with a confirmed or possible sanctions/PEP match; all such cases must route to human-analyst-task.",
+      "aigf-risk-ref": "RI-KYC-07",
+      "aigf-mitigation-ref": "MI-KYC-07",
+      "enforcement-mode": "direct-enforcement",
+      "requirements": [
+        {
+          "control-requirement-url": "https://aigf.finos.org/mitigations/MI-KYC-07",
+          "control-config-url": "../workflow/kyc-risk-confidence-dmn.json"
+        }
+      ]
+    },
+    "mandatory-human-review": {
+      "description": "Any case with extraction confidence below 0.95 or risk tier above low must escalate to human-analyst-task via the deterministic gate.",
+      "aigf-risk-ref": "RI-KYC-12",
+      "aigf-mitigation-ref": "MI-KYC-12",
+      "enforcement-mode": "direct-enforcement",
+      "requirements": [
+        {
+          "control-requirement-url": "https://aigf.finos.org/mitigations/MI-KYC-12",
+          "control-config-url": "../workflow/kyc-risk-confidence-dmn.json"
+        }
+      ]
+    },
+    "untrusted-document-boundary": {
+      "description": "Uploaded customer documents are sanitized and isolated inside a strict data-only delimiter boundary before model invocation.",
+      "aigf-risk-ref": "RI-KYC-15",
+      "aigf-mitigation-ref": "MI-KYC-15",
+      "enforcement-mode": "direct-enforcement",
+      "requirements": [
+        {
+          "control-requirement-url": "https://aigf.finos.org/mitigations/MI-KYC-15",
+          "control-config-url": "../evidence/control-state.json"
+        }
+      ]
+    },
+    "ccc-workload-isolation": {
+      "description": "KYC workflow and external model calls run within an isolated cloud workload boundary with zero provider training retention and bounded token/cost quotas.",
+      "aigf-risk-ref": "RI-KYC-19",
+      "aigf-mitigation-ref": "MI-KYC-19",
+      "enforcement-mode": "shared-control-and-provider-evidence",
+      "requirements": [
+        {
+          "control-requirement-url": "https://ccc.finos.org/controls/CCC-Core-Isolation",
+          "control-config-url": "../evidence/control-state.json"
+        }
+      ]
+    }
+  }
+}

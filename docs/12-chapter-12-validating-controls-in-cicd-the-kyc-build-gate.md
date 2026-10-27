@@ -52,6 +52,8 @@ The last line of that test matrix is the one worth sitting with. Chapter 9 asser
 
 Any one of these checks failing blocks the build the same way a failing unit test blocks any other software change — the pull request from Chapter 9.4 cannot merge, and the use case cannot progress to Chapter 7's Step 7 deployment. There's no special-casing between a KYC-specific control and a general one drawn from the AIGF catalog: the CI/CD integration treats them identically, which is exactly Chapter 4.1's point about compliance checks running where code already runs. Ownership follows Chapter 7.1's structure directly — Hub MLOps/DevSecOps maintains the pipeline mechanics that run these checks, while the Governance Layer (MRM) is who defines what “pass” actually means for a given control, particularly the DMN test cases a change might need to satisfy.
 
+A complete, zero-dependency runnable implementation of this KYC build gate—including Step 2 policy derivation checks, CALM boundary verification, exhaustive DMN invariant checks, first-class evidence freshness gating, and a 7-scenario adversarial mutation test suite—is provided in [`examples/kyc/`](../examples/kyc/README.md) (`python3 examples/kyc/ci/validate_governance.py` and `python3 examples/kyc/ci/validate_governance.py --self-test`).
+
 ## 12.5 From CI/CD Gate to Deployment
 
 Once every check passes, what gets deployed is the exact bundle this chapter validated — the CALM specification and the Fluxnova process definition, not a hand-verified approximation of them. But “what passed the gate” and “what's actually running” are two different claims, and everything so far in this chapter only establishes the first one. Section 12.6 closes that gap.

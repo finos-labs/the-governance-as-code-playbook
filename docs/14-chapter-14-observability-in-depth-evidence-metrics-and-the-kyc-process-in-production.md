@@ -45,6 +45,18 @@ Metrics on tasks answer an operational question. This section answers Chapter 5'
 
 This table is the literal answer to the claim Chapter 9 made when it said a confirmed sanctions match can never reach an auto-clear outcome. It's not an assertion about the DMN table's design anymore — it's a count, over 4,820 real cases, confirming that every one of the 142 cases where the control triggered was actually routed to escalation. This is precisely the kind of evidence Chapter 6 described AIUC-1's adversarial testing and audit process wanting to see, and precisely what an internal audit or a regulator examining the KYC process would ask for first.
 
+### 14.4.1 First-Class Evidence Lifecycle & Shared/External Control Boundaries
+
+For control evidence to function as an enforceable primitive across both CI/CD and runtime admission gates rather than a static log snapshot, **control state and evidence records must be modeled as first-class objects** (see [`examples/kyc/evidence/control-state.json`](../examples/kyc/evidence/control-state.json)). Each CALM control maintains an explicit `control_state` record that binds the control to its `covered_nodes`, declares its `freshness_policy` (`max_age_hours`), and evaluates its evidence records into one of five canonical lifecycle states:
+
+- **`current`** — At least one verified evidence record exists within the control's `max_age_hours` freshness window, and no contradicting runtime signal is present.
+- **`stale`** — Only expired evidence exists (for example, a weekly shared-platform attestation whose `collected_at` timestamp exceeds a 24-hour TTL).
+- **`insufficient`** — No verified evidence record has been attached for the control across its declared CALM node scope.
+- **`superseded`** — Earlier evidence records have been marked `superseded` by a newer architecture or policy revision, and no current verification has completed for the active version.
+- **`contradicted`** — A runtime telemetry assertion, drift check, or adversarial test has produced an explicit violation (`status: "contradicted"`), immediately invalidating the control's posture even if an earlier CI test passed.
+
+Modeling evidence as a first-class object also makes **external dependencies and shared controls** explicit rather than idealized. In a real FSI deployment, some controls are enforced directly by the workflow team's own artefacts (`enforcement_mode: "direct-enforcement"`, such as `no-sanctions-override` and `mandatory-human-review` on `risk-confidence-gate`), while others depend on an upstream cloud platform or external model provider (`enforcement_mode: "shared-control-and-provider-evidence"`, such as `ccc-workload-isolation` across `llm-provider` and `fluxnova-engine`). In [`examples/kyc/evidence/control-state.json`](../examples/kyc/evidence/control-state.json) and [`examples/kyc/ci/validate_governance.py`](../examples/kyc/ci/validate_governance.py), shared and provider-dependent controls require explicit provider-node scoping, zero-data-retention attestation (`zero_data_retention_attested: true`), bounded per-case token budgets (`token_budget_cap_per_case`), and a stricter freshness window (`max_age_hours: 24`) so stale or unverified upstream assurances automatically fail the governance gate.
+
 ## 14.5 Dashboards for Different Audiences
 
 <img src="images/06-tokenomics-dashboard.png" alt="Figure 6" style="width:6.30208in;height:3.96875in" />

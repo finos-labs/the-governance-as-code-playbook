@@ -1,0 +1,28 @@
+# SPDX-License-Identifier: CC-BY-4.0
+# Step 1 Artefact: Machine-Readable KYC Use Case Classification (Chapter 9)
+use_case_id: "UC-KYC-DOC-REVIEW-001"
+name: "Agentic KYC Document Review Assistant"
+version: "1.0.0"
+owner: "Financial Crime Compliance & Onboarding Engineering"
+narrative: "An agent that triages KYC documentation for new retail and corporate customers, with bounded autonomy to clear straightforward cases and a hard deterministic requirement to escalate ambiguous, low-confidence, or sanctions-adjacent cases to a human analyst."
+
+taxonomy_classification:
+  agent_type: "document-processing-and-decisioning"
+  architecture_pattern: "single-agent-with-tool-access"
+  autonomy_level: "bounded-autonomy"
+  tool_authority: "read-sanctions-write-case-queue-only"
+  human_oversight: "hitl-on-escalation-hotl-on-autoclear"
+  data_sensitivity: "high-pii-and-government-id"
+  regulatory_criticality: "tier-1-aml-kyc-sanctions"
+  external_model_dependency: true
+  processes_untrusted_documents: true
+
+permitted_tools:
+  - "kyc-doc-store-read"
+  - "sanctions-pep-screening-read"
+  - "case-management-queue-write"
+
+prohibited_actions:
+  - "override-sanctions-hit"
+  - "close-compliance-file"
+  - "direct-core-banking-write"

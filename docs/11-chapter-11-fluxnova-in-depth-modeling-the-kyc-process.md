@@ -6,6 +6,15 @@ Chapter 9 covered Step 1 of the nine-step path — codifying the KYC use case in
 
 Recall the mitigations identified for the KYC use case in Chapter 9: mandatory human confirmation before any sanctions-adjacent case is cleared, a confidence threshold below which the agent must escalate rather than guess, and no ability for the agent to override a sanctions hit under any circumstance. Each of these is, in effect, a requirement for a specific enforcement point somewhere in the workflow. Fluxnova's job is to take that list of requirements and turn it into an explicit process definition — a BPMN diagram plus one or more DMN decision tables — where each mitigation corresponds to a concrete gateway, task boundary, or decision rule rather than an instruction the agent is merely asked to follow.
 
+### 11.1.1 Portable Deterministic Orchestration Contract vs. Reference Engine
+
+Architecturally, the core abstraction required by Governance-as-Code is a **deterministic orchestration and policy enforcement layer** that sits *outside* the probabilistic model. Fluxnova is used throughout this playbook as the FINOS open-source **reference implementation** of that layer, rather than as a mandatory vendor or runtime lock-in. Any orchestration runtime—whether Fluxnova BPMN/DMN, a state-machine workflow engine, or a policy-enforcing service mesh—satisfies the governance contract if it guarantees four engine-neutral invariants:
+
+1. **Externalized Gate Enforcement**: The agent's output is treated strictly as an untrusted structured recommendation; routing to downstream state changes (`case-management-queue` vs. `human-analyst-task`) is executed by a deterministic runtime outside the LLM context window.
+2. **Inspectable, Version-Controlled Decision Logic**: Gate conditions (such as `no-sanctions-override` and the `0.95` extraction confidence floor) are codified in a declarative, machine-testable decision artefact (see [`examples/kyc/workflow/kyc-risk-confidence-dmn.json`](../examples/kyc/workflow/kyc-risk-confidence-dmn.json)) that CI can exhaustively verify before deployment.
+3. **Bounded Tool Authority & Restricted Context**: The orchestration boundary enforces which tools the agent can invoke and which sensitive variables (`restricted variables`) are withheld from prompts.
+4. **Immutable Execution Correlation**: Every gate evaluation, tool invocation, and human escalation emits a correlated audit record (`case_id`, `calm.control.id`, `aigf.risk.id`) into the observability pipeline.
+
 ## 11.2 Two AI-Native Fluxnova Constructs
 
 Everything in Section 11.1 could, in principle, be built with generic BPMN. What makes Fluxnova specifically suited to agentic workflows is two purpose-built constructs that connect the process layer directly to an LLM, without leaving the deterministic guarantees described in Chapter 3 at the door.

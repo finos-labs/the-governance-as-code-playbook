@@ -1,0 +1,116 @@
+{
+  "spdx_license_identifier": "CC-BY-4.0",
+  "schema_version": "1.0.0",
+  "use_case_id": "UC-KYC-DOC-REVIEW-001",
+  "calm_architecture_ref": "kyc-agentic-subprocess-v1",
+  "evaluation_timestamp": "2026-10-26T18:00:00Z",
+  "allowed_lifecycle_states": [
+    "current",
+    "stale",
+    "insufficient",
+    "superseded",
+    "contradicted"
+  ],
+  "control_states": [
+    {
+      "control_id": "no-sanctions-override",
+      "aigf_risk_ref": "RI-KYC-07",
+      "enforcement_mode": "direct-enforcement",
+      "covered_nodes": ["risk-confidence-gate", "fluxnova-dmn-service"],
+      "lifecycle_state": "current",
+      "freshness_policy": {
+        "max_age_hours": 168
+      },
+      "evidence_records": [
+        {
+          "evidence_id": "EV-DMN-SANCTIONS-2026-10-26",
+          "source_type": "ci-dmn-exhaustive-test",
+          "producer": "kyc-governance-ci-gate",
+          "collected_at": "2026-10-26T17:30:00Z",
+          "artifact_hash": "sha256:9f4b2c8e1d7a6f5b3c2d1e0f9a8b7c6d5e4f3a2b1c0d9e8f7a6b5c4d3e2f1a0b",
+          "status": "verified",
+          "summary": "100% of confirmed/possible sanctions permutations route to escalate-compliance or escalate-senior-analyst (0 auto-clear)."
+        }
+      ]
+    },
+    {
+      "control_id": "mandatory-human-review",
+      "aigf_risk_ref": "RI-KYC-12",
+      "enforcement_mode": "direct-enforcement",
+      "covered_nodes": ["risk-confidence-gate", "human-analyst-task"],
+      "lifecycle_state": "current",
+      "freshness_policy": {
+        "max_age_hours": 168
+      },
+      "evidence_records": [
+        {
+          "evidence_id": "EV-DMN-CONFIDENCE-2026-10-26",
+          "source_type": "ci-dmn-exhaustive-test",
+          "producer": "kyc-governance-ci-gate",
+          "collected_at": "2026-10-26T17:30:00Z",
+          "artifact_hash": "sha256:4a8d7e6c5b4a3f2e1d0c9b8a7f6e5d4c3b2a1f0e9d8c7b6a5f4e3d2c1b0a9f8e",
+          "status": "verified",
+          "summary": "All cases with extraction_confidence < 0.95 or customer_risk_tier != low route to human analyst tasks."
+        }
+      ]
+    },
+    {
+      "control_id": "untrusted-document-boundary",
+      "aigf_risk_ref": "RI-KYC-15",
+      "enforcement_mode": "direct-enforcement",
+      "covered_nodes": ["kyc-agent", "kyc-doc-store"],
+      "lifecycle_state": "current",
+      "freshness_policy": {
+        "max_age_hours": 72
+      },
+      "evidence_records": [
+        {
+          "evidence_id": "EV-REDTEAM-DOC-INJECTION-2026-10-26",
+          "source_type": "adversarial-prompt-injection-suite",
+          "producer": "security-ci-harness",
+          "collected_at": "2026-10-26T12:00:00Z",
+          "artifact_hash": "sha256:1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d",
+          "status": "verified",
+          "summary": "50/50 synthetic prompt-injection payloads embedded in passport/utility PDFs blocked from altering system instructions or tool calls."
+        }
+      ]
+    },
+    {
+      "control_id": "ccc-workload-isolation",
+      "aigf_risk_ref": "RI-KYC-19",
+      "enforcement_mode": "shared-control-and-provider-evidence",
+      "covered_nodes": ["kyc-agent", "llm-provider", "fluxnova-engine"],
+      "lifecycle_state": "current",
+      "freshness_policy": {
+        "max_age_hours": 24
+      },
+      "external_dependency": {
+        "provider_node": "llm-provider",
+        "shared_control_framework": "FINOS Common Cloud Controls (CCC)",
+        "zero_data_retention_attested": true,
+        "token_budget_cap_per_case": 8192
+      },
+      "evidence_records": [
+        {
+          "evidence_id": "EV-CCC-POSTURE-2026-10-26",
+          "source_type": "shared-platform-attestation",
+          "producer": "cloud-platform-compliance-scanner",
+          "collected_at": "2026-10-26T08:00:00Z",
+          "artifact_hash": "sha256:7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f",
+          "status": "verified",
+          "summary": "VPC isolation, mTLS service mesh policy, and external LLM zero-data-retention endpoint policy verified within 24h freshness window."
+        },
+        {
+          "evidence_id": "EV-CCC-POSTURE-2026-10-19",
+          "source_type": "shared-platform-attestation",
+          "producer": "cloud-platform-compliance-scanner",
+          "collected_at": "2026-10-19T08:00:00Z",
+          "artifact_hash": "sha256:0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b",
+          "status": "superseded",
+          "superseded_by": "EV-CCC-POSTURE-2026-10-26",
+          "summary": "Prior week attestation superseded by EV-CCC-POSTURE-2026-10-26."
+        }
+      ]
+    }
+  ]
+}
