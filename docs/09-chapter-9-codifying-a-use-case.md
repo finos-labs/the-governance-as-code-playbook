@@ -60,6 +60,17 @@ Reviewing the risk catalog against that profile, a KYC use case will typically p
 
 Each shortlisted risk gets matched to catalog mitigations and made concrete for this use case — for example: mandatory human confirmation before any sanctions-adjacent case is cleared (not just flagged); confidence thresholds below which the agent must escalate rather than guess; periodic sampling and drift monitoring on extraction accuracy against a labeled test set; and input sanitization plus a locked-down instruction boundary around anything read from an uploaded document, so text embedded in a fake "certificate" can't act as a prompt.
 
+### 9.2.1 Deterministic Policy Derivation with Human Review Override
+
+For risk and mitigation extraction to operate genuinely *as code* rather than as a purely manual workshop exercise, the heuristic assessment above is paired with a deterministic **policy derivation rule set** (`examples/kyc/policy/derivation-rules.yaml`). Rather than relying on each delivery team to browse the full AIGF catalog by hand and hope nothing critical is missed, the derivation rules evaluate the structured taxonomy properties declared in `examples/kyc/use-case/kyc-use-case.yaml` and automatically emit the baseline risk shortlist and required CALM controls:
+
+- `regulatory_criticality == "tier-1-aml-kyc-sanctions"` deterministically derives **`RI-KYC-07`** (*Autonomous False Clear on Sanctions or PEP Match*, `severity: critical`) -> **`MI-KYC-07`** -> CALM control **`no-sanctions-override`**.
+- `autonomy_level == "bounded-autonomy"` deterministically derives **`RI-KYC-12`** (*Hallucinated or Low-Confidence Field Extraction*, `severity: high`) -> **`MI-KYC-12`** -> CALM control **`mandatory-human-review`**.
+- `processes_untrusted_documents == true` deterministically derives **`RI-KYC-15`** (*Indirect Prompt Injection via Uploaded Onboarding Document*, `severity: high`) -> **`MI-KYC-15`** -> CALM control **`untrusted-document-boundary`**.
+- `external_model_dependency == true` deterministically derives **`RI-KYC-19`** (*Unbounded External Model Invocation or Cross-Tenant Data Exposure*, `severity: high`) -> **`MI-KYC-19`** -> CALM control **`ccc-workload-isolation`**.
+
+Human Model Risk Management (`MRM`) and compliance reviewers remain in the loop on top of this deterministic baseline: reviewers can append additional context-specific risks or record an explicit, audited override on eligible non-critical risks (requiring both an `mrm_approval_id` and a written `rationale` in `examples/kyc/risk-shortlist.json`), while `critical` regulatory risks such as `RI-KYC-07` are marked `non_overridable` in policy and enforced automatically by the CI build gate (`examples/kyc/ci/validate_governance.py`).
+
 ## 9.3 Turning the Assessment into a Contribution
 
 At this point the FSI organization has a complete internal risk assessment — useful on its own. Codifying it as a contribution to AIGF means expressing it as a structured artifact using the repository's existing template, rather than a one-off internal memo.

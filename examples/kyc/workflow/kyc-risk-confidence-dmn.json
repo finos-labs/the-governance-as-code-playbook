@@ -1,0 +1,100 @@
+{
+  "spdx_license_identifier": "CC-BY-4.0",
+  "decision_table_id": "kyc-risk-confidence-gate-dmn-v1",
+  "name": "KYC Risk & Confidence Deterministic Gate Table",
+  "hit_policy": "FIRST",
+  "reference_engine_binding": {
+    "engine": "FINOS Fluxnova DMN",
+    "bpmn_task_ref": "BusinessRuleTask_RiskConfidenceGate",
+    "calm_node_ref": "risk-confidence-gate"
+  },
+  "inputs": [
+    {
+      "name": "sanctions_match_status",
+      "type": "string",
+      "allowed_values": ["confirmed", "possible", "none"]
+    },
+    {
+      "name": "extraction_confidence",
+      "type": "number",
+      "range": [0.0, 1.0]
+    },
+    {
+      "name": "customer_risk_tier",
+      "type": "string",
+      "allowed_values": ["low", "medium", "high"]
+    }
+  ],
+  "outputs": [
+    {
+      "name": "routing_decision",
+      "allowed_values": ["auto-clear", "escalate-compliance", "escalate-senior-analyst", "escalate-analyst"]
+    }
+  ],
+  "invariants": {
+    "no-sanctions-override": {
+      "forbidden_routing_decisions_when_sanctions_in": ["confirmed", "possible"],
+      "forbidden_outputs": ["auto-clear"]
+    },
+    "mandatory-human-review": {
+      "minimum_autoclear_confidence": 0.95,
+      "allowed_autoclear_risk_tiers": ["low"]
+    }
+  },
+  "rules": [
+    {
+      "rule_id": "DMN-R1",
+      "sanctions_match_status": "confirmed",
+      "min_confidence": 0.0,
+      "max_confidence": 1.0,
+      "customer_risk_tier": "*",
+      "routing_decision": "escalate-compliance",
+      "enforces_control": "no-sanctions-override"
+    },
+    {
+      "rule_id": "DMN-R2",
+      "sanctions_match_status": "possible",
+      "min_confidence": 0.0,
+      "max_confidence": 1.0,
+      "customer_risk_tier": "*",
+      "routing_decision": "escalate-senior-analyst",
+      "enforces_control": "no-sanctions-override"
+    },
+    {
+      "rule_id": "DMN-R3",
+      "sanctions_match_status": "none",
+      "min_confidence": 0.0,
+      "max_confidence": 0.949999,
+      "customer_risk_tier": "*",
+      "routing_decision": "escalate-analyst",
+      "enforces_control": "mandatory-human-review"
+    },
+    {
+      "rule_id": "DMN-R4",
+      "sanctions_match_status": "none",
+      "min_confidence": 0.95,
+      "max_confidence": 1.0,
+      "customer_risk_tier": "high",
+      "routing_decision": "escalate-senior-analyst",
+      "enforces_control": "mandatory-human-review"
+    },
+    {
+      "rule_id": "DMN-R5",
+      "sanctions_match_status": "none",
+      "min_confidence": 0.95,
+      "max_confidence": 1.0,
+      "customer_risk_tier": "medium",
+      "routing_decision": "escalate-analyst",
+      "enforces_control": "mandatory-human-review"
+    },
+    {
+      "rule_id": "DMN-R6",
+      "sanctions_match_status": "none",
+      "min_confidence": 0.95,
+      "max_confidence": 1.0,
+      "customer_risk_tier": "low",
+      "routing_decision": "auto-clear",
+      "enforces_control": "mandatory-human-review"
+    }
+  ]
+}

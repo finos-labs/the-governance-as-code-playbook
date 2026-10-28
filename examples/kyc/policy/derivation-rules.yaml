@@ -1,0 +1,55 @@
+# SPDX-License-Identifier: CC-BY-4.0
+# Step 2 Artefact: Deterministic Policy Rules Mapping Use-Case Properties to AIGF Risks & Controls (Chapter 9)
+policy_bundle_id: "AIGF-STEP2-DERIVATION-RULES-V1"
+version: "1.0.0"
+override_policy:
+  allow_human_override: true
+  require_mrm_approval_id: true
+  require_rationale: true
+  non_overridable_severities:
+    - "critical"
+
+rules:
+  - rule_id: "DR-SANCTIONS-01"
+    description: "Any use case with AML/KYC/sanctions criticality or bounded autonomy must prevent autonomous sanctions overrides."
+    when_property: "regulatory_criticality"
+    equals: "tier-1-aml-kyc-sanctions"
+    derive_risk_id: "RI-KYC-07"
+    risk_title: "Autonomous False Clear on Sanctions or PEP Match"
+    aigf_category: "regulatory-and-compliance"
+    severity: "critical"
+    required_mitigation_id: "MI-KYC-07"
+    required_calm_control_id: "no-sanctions-override"
+
+  - rule_id: "DR-CONFIDENCE-02"
+    description: "Bounded-autonomy decisioning agents must enforce a deterministic confidence floor and human escalation gate."
+    when_property: "autonomy_level"
+    equals: "bounded-autonomy"
+    derive_risk_id: "RI-KYC-12"
+    risk_title: "Hallucinated or Low-Confidence Field Extraction Leading to Incorrect Triage"
+    aigf_category: "operational"
+    severity: "high"
+    required_mitigation_id: "MI-KYC-12"
+    required_calm_control_id: "mandatory-human-review"
+
+  - rule_id: "DR-UNTRUSTED-DOC-03"
+    description: "Agents processing untrusted uploaded documents must enforce prompt-injection boundary and input sanitization controls."
+    when_property: "processes_untrusted_documents"
+    equals: true
+    derive_risk_id: "RI-KYC-15"
+    risk_title: "Indirect Prompt Injection via Uploaded Onboarding Document"
+    aigf_category: "security"
+    severity: "high"
+    required_mitigation_id: "MI-KYC-15"
+    required_calm_control_id: "untrusted-document-boundary"
+
+  - rule_id: "DR-EXTERNAL-MODEL-04"
+    description: "Use cases relying on an external LLM provider with high PII sensitivity must enforce token/cost circuit breakers and workload isolation."
+    when_property: "external_model_dependency"
+    equals: true
+    derive_risk_id: "RI-KYC-19"
+    risk_title: "Unbounded External Model Invocation or Cross-Tenant Data Exposure"
+    aigf_category: "security"
+    severity: "high"
+    required_mitigation_id: "MI-KYC-19"
+    required_calm_control_id: "ccc-workload-isolation"
